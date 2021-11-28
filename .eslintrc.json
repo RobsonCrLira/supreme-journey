@@ -53,7 +53,8 @@
 		"max-classes-per-file": [
 			"error",
 			2
-		]
+		],
+		"new-cap": "off"
 	},
 	"settings": {
 		"import/extensions": [
