@@ -26,6 +26,7 @@
 		"import"
 	],
 	"rules": {
+		"no-restricted-syntax": "off",
 		"no-new": "off",
 		"no-underscore-dangle": "off",
 		"no-await-in-loop": "off",
