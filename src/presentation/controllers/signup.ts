@@ -3,8 +3,7 @@ import { EmailValidator } from '../../protocols/emailValidator';
 import { HttpRequest, HttpResponse } from '../../protocols/http';
 import { InvalidParamError } from '../errors/invalidParamError';
 import { MissingParamError } from '../errors/missingParamErrors';
-import { ServerError } from '../errors/serverError';
-import { badRequest } from '../helpers/httpHelpers';
+import { badRequest, serverError } from '../helpers/httpHelpers';
 
 class SignUpController implements Controller {
 	constructor(private readonly emailValidator: EmailValidator) {
@@ -30,10 +29,7 @@ class SignUpController implements Controller {
 			if (!isValid) return badRequest(new InvalidParamError('email'));
 			return badRequest(new MissingParamError(''));
 		} catch (error) {
-			return {
-				statusCode: 500,
-				body: new ServerError(),
-			};
+			return serverError();
 		}
 	}
 }
