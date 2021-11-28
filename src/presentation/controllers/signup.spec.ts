@@ -1,3 +1,5 @@
+import { AccountModel } from '../../domain/models/account';
+import { AddAccount, AddAccountModel } from '../../domain/usecase/addAccount';
 import { EmailValidator } from '../../protocols';
 import { ServerError, MissingParamError, InvalidParamError } from '../errors';
 import { SignUpController } from './signup';
@@ -5,18 +7,41 @@ import { SignUpController } from './signup';
 interface SutTypes {
 	sut: SignUpController;
 	emailValidatorStub: EmailValidator;
+	addAccountStub: AddAccount;
 }
-const makeSut = (): SutTypes => {
+
+const makeAddAccount = (): AddAccount => {
+	class addAccountStub implements AddAccount {
+		add(account: AddAccountModel): AccountModel {
+			const fakeAccount = {
+				id: 'valid_id',
+				name: 'valid_name',
+				email: 'valid_email@mail.com',
+				password: 'valid_password',
+			};
+			return fakeAccount;
+		}
+	}
+	return new addAccountStub();
+};
+
+const makeEmailValidator = (): EmailValidator => {
 	class EmailValidatorStub implements EmailValidator {
 		isValid(email: string): boolean {
 			return true;
 		}
 	}
-	const emailValidatorStub = new EmailValidatorStub();
-	const sut = new SignUpController(emailValidatorStub);
+	return new EmailValidatorStub();
+};
+
+const makeSut = (): SutTypes => {
+	const emailValidatorStub = makeEmailValidator();
+	const addAccountStub = makeAddAccount();
+	const sut = new SignUpController(emailValidatorStub, addAccountStub);
 	return {
 		sut,
 		emailValidatorStub,
+		addAccountStub,
 	};
 };
 
@@ -131,6 +156,25 @@ describe('SignUp Controller', () => {
 		};
 		sut.handle(httpRequest);
 		expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com');
+	});
+
+	test('Should call AddAccount with values', () => {
+		const { sut, addAccountStub } = makeSut();
+		const addSpy = jest.spyOn(addAccountStub, 'add');
+		const httpRequest = {
+			body: {
+				name: 'any_name',
+				email: 'any_email@mail.com',
+				password: 'any_password',
+				passwordConfirmation: 'any_password',
+			},
+		};
+		sut.handle(httpRequest);
+		expect(addSpy).toHaveBeenCalledWith({
+			name: 'any_name',
+			email: 'any_email@mail.com',
+			password: 'any_password',
+		});
 	});
 
 	test('Should return 500 EmailValidator throws', () => {
