@@ -6,7 +6,7 @@ import {
 	AddAccount,
 } from './signupProtocols';
 import { MissingParamError, InvalidParamError } from '../../errors';
-import { badRequest, serverError } from '../../helpers/httpHelpers';
+import { badRequest, ok, serverError } from '../../helpers/httpHelpers';
 
 class SignUpController implements Controller {
 	constructor(
@@ -46,10 +46,7 @@ class SignUpController implements Controller {
 				email,
 				password,
 			});
-			return {
-				statusCode: 200,
-				body: account,
-			};
+			return ok(account);
 		} catch (error) {
 			return serverError();
 		}
