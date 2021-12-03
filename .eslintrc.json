@@ -54,7 +54,8 @@
 			"error",
 			2
 		],
-		"new-cap": "off"
+		"new-cap": "off",
+		"no-promise-executor-return": "off"
 	},
 	"settings": {
 		"import/extensions": [
