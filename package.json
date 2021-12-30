@@ -8,12 +8,13 @@
 	"scripts": {
 		"test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
 		"test:verbose": "jest --passWithNoTests --runInBand",
-		"test:unit": "npm test -- --watch -c jest-unit-config.js",
-		"test:integration": "npm test -- --watch -c jest-integration-config.js",
-		"test:staged": "npm test -- --findRelatedTests",
-		"test:ci": "npm test -- --coverage",
+		"test:unit": "yarn test -- --watch -c jest-unit-config.js",
+		"test:integration": "yarn test -- --watch -c jest-integration-config.js",
+		"test:staged": "yarn test -- --findRelatedTests",
+		"test:ci": "yarn test -- --coverage",
 		"postinstall": "husky install",
-		"lint": "eslint 'src/**' --fix"
+		"lint": "eslint 'src/**' --fix",
+		"prepare": "husky install"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.0.3",
@@ -29,7 +30,7 @@
 		"eslint-plugin-import-helpers": "^1.2.0",
 		"eslint-plugin-prettier": "^4.0.0",
 		"git-commit-msg-linter": "^3.2.8",
-		"husky": "^7.0.4",
+		"husky": "^7.0.0",
 		"jest": "^27.3.1",
 		"lint-staged": "^12.1.2",
 		"pinst": "^2.1.6",
@@ -40,11 +41,5 @@
 	},
 	"dependencies": {
 		"validator": "^13.7.0"
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run eslint, && npm run test:staged",
-			"pre-push": "npm run test:ci"
-		}
 	}
 }
