@@ -3,11 +3,11 @@ import app from '../config/app';
 
 describe('CORS Middleware', () => {
 	test('Should enable CORS', async () => {
-		app.get('/testBodyParser', (req, res) => {
+		app.get('/testCors', (req, res) => {
 			res.send();
 		});
 		await request(app)
-			.get('/testBodyParser')
+			.get('/testCors')
 			.expect('access-control-allow-origin', '*')
 			.expect('access-control-allow-methods', '*')
 			.expect('access-control-allow-headers', '*');
