@@ -1,11 +1,10 @@
-import { Authentication } from '../../../domain/usecase/authentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
 import {
 	badRequest,
 	serverError,
 	unauthorized,
 } from '../../helpers/httpHelpers';
-import { EmailValidator, HttpRequest } from '../signup/signupProtocols';
+import { EmailValidator, HttpRequest, Authentication } from './loginProtocols';
 import { LoginController } from './login';
 
 const makeEmailValidator = (): EmailValidator => {
