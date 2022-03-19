@@ -1,3 +1,4 @@
-export { InvalidParamError } from './invalidParamError';
-export { MissingParamError } from './missingParamErrors';
-export { ServerError } from './serverError';
+export * from './invalidParamError';
+export * from './missingParamErrors';
+export * from './serverError';
+export * from './unauthorizedError';
