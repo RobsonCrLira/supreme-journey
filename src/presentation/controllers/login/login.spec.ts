@@ -1,6 +1,10 @@
 import { Authentication } from '../../../domain/usecase/authentication';
 import { InvalidParamError, MissingParamError } from '../../errors';
-import { badRequest, serverError } from '../../helpers/httpHelpers';
+import {
+	badRequest,
+	serverError,
+	unauthorized,
+} from '../../helpers/httpHelpers';
 import { EmailValidator, HttpRequest } from '../signup/signupProtocols';
 import { LoginController } from './login';
 
@@ -15,7 +19,7 @@ const makeEmailValidator = (): EmailValidator => {
 
 const makeAuthentication = (): Authentication => {
 	class AuthenticationStub implements Authentication {
-		auth(email: string, password: string): Promise<string> {
+		auth(email: string, password: string): Promise<string | null> {
 			return new Promise((resolve) => resolve('any_token'));
 		}
 	}
@@ -102,5 +106,14 @@ describe('Login Controller', () => {
 			'any_email@email.com',
 			'any_password'
 		);
+	});
+
+	test('Should return if invalid credentials are provided', async () => {
+		const { sut, authenticationStub } = makeSut();
+		jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
+			new Promise((resolve) => resolve(null))
+		);
+		const httpResponse = await sut.handle(makeFakeRequest());
+		expect(httpResponse).toEqual(unauthorized());
 	});
 });
