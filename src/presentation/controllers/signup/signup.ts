@@ -5,7 +5,6 @@ import {
 	AddAccount,
 	Validation,
 } from './signupProtocols';
-import { InvalidParamError } from '../../errors';
 import { badRequest, ok, serverError } from '../../helpers/httpHelpers';
 
 class SignUpController implements Controller {

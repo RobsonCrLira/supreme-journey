@@ -24,12 +24,12 @@ describe('SingUpValidation Factory', () => {
 			'name',
 			'email',
 			'password',
-			'password_confirmation',
+			'passwordConfirmation',
 		]) {
 			validations.push(new RequiredFieldsValidations(field));
 		}
 		validations.push(
-			new CompareFieldsValidations('password', 'password_confirmation')
+			new CompareFieldsValidations('password', 'passwordConfirmation')
 		);
 
 		validations.push(new EmailValidation('email', makeEmailValidator()));

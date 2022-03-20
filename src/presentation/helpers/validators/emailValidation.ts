@@ -11,7 +11,6 @@ export class EmailValidation implements Validation {
 		this.emailValidator = emailValidator;
 	}
 
-	// eslint-disable-next-line consistent-return
 	validate(input: any): Error | null {
 		const isValid = this.emailValidator.isValid(input[this.fieldName]);
 
