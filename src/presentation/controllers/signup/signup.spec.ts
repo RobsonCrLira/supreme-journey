@@ -2,15 +2,10 @@ import {
 	AccountModel,
 	AddAccount,
 	AddAccountModel,
-	EmailValidator,
 	HttpRequest,
 	Validation,
 } from './signupProtocols';
-import {
-	ServerError,
-	MissingParamError,
-	InvalidParamError,
-} from '../../errors';
+import { ServerError, MissingParamError } from '../../errors';
 import { SignUpController } from './signup';
 import { badRequest, ok, serverError } from '../../helpers/httpHelpers';
 
