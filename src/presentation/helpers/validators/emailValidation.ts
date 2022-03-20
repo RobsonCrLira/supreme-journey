@@ -1,0 +1,24 @@
+import { InvalidParamError } from '../../errors';
+import { EmailValidator } from '../../protocols/emailValidator';
+import { Validation } from './validation';
+
+export class EmailValidation implements Validation {
+	constructor(
+		private readonly fieldName: string,
+		private readonly emailValidator: EmailValidator
+	) {
+		this.fieldName = fieldName;
+		this.emailValidator = emailValidator;
+	}
+
+	// eslint-disable-next-line consistent-return
+	validate(input: any): Error | null {
+		const isValid = this.emailValidator.isValid(input[this.fieldName]);
+
+		if (!isValid) {
+			return new InvalidParamError(this.fieldName);
+		}
+
+		return null;
+	}
+}
