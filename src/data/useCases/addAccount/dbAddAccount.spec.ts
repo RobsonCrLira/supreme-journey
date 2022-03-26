@@ -26,7 +26,7 @@ const makeFakeAccountData = (): AddAccountModel => ({
 
 const makeHasher = (): Hasher => {
 	class HasherStub implements Hasher {
-		async encrypt(value: string): Promise<string> {
+		async hash(value: string): Promise<string> {
 			return new Promise((resolve) => resolve('hashed_password'));
 		}
 	}
@@ -56,7 +56,7 @@ const makeSut = (): SutTypes => {
 describe('DbAddAccount UseCase', () => {
 	test('Should call Hasher with corret password', async () => {
 		const { sut, hashStub } = makeSut();
-		const encryptSpy = jest.spyOn(hashStub, 'encrypt');
+		const encryptSpy = jest.spyOn(hashStub, 'hash');
 
 		await sut.add(makeFakeAccountData());
 		expect(encryptSpy).toHaveBeenCalledWith('valid_password');
@@ -64,7 +64,7 @@ describe('DbAddAccount UseCase', () => {
 
 	test('Should throw if Hasher throws', async () => {
 		const { sut, hashStub } = makeSut();
-		jest.spyOn(hashStub, 'encrypt').mockReturnValueOnce(
+		jest.spyOn(hashStub, 'hash').mockReturnValueOnce(
 			new Promise((resolve, reject) => reject(new Error()))
 		);
 
