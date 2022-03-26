@@ -61,7 +61,7 @@
 		],
 		"max-classes-per-file": [
 			"error",
-			3
+			4
 		],
 		"new-cap": "off",
 		"no-promise-executor-return": "off"
