@@ -2,13 +2,13 @@ import {
 	AccountModel,
 	AddAccountModel,
 	AddAccountRepository,
-	Encrypter,
+	Hasher,
 } from './dbAddAccountProtocols';
 import { DbAddAccount } from './dbAddAccount';
 
 interface SutTypes {
 	sut: DbAddAccount;
-	encrypterStub: Encrypter;
+	hashStub: Hasher;
 	addAccountRepositoryStub: AddAccountRepository;
 }
 const makeFakeAccount = (): AccountModel => ({
@@ -24,13 +24,13 @@ const makeFakeAccountData = (): AddAccountModel => ({
 	password: 'valid_password',
 });
 
-const makeEncrypter = (): Encrypter => {
-	class EncrypterStub implements Encrypter {
+const makeHasher = (): Hasher => {
+	class HasherStub implements Hasher {
 		async encrypt(value: string): Promise<string> {
 			return new Promise((resolve) => resolve('hashed_password'));
 		}
 	}
-	return new EncrypterStub();
+	return new HasherStub();
 };
 
 const makeAddAccountRepository = (): AddAccountRepository => {
@@ -43,28 +43,28 @@ const makeAddAccountRepository = (): AddAccountRepository => {
 };
 
 const makeSut = (): SutTypes => {
-	const encrypterStub = makeEncrypter();
+	const hashStub = makeHasher();
 	const addAccountRepositoryStub = makeAddAccountRepository();
-	const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub);
+	const sut = new DbAddAccount(hashStub, addAccountRepositoryStub);
 	return {
 		sut,
-		encrypterStub,
+		hashStub,
 		addAccountRepositoryStub,
 	};
 };
 
 describe('DbAddAccount UseCase', () => {
-	test('Should call Encrypter with corret password', async () => {
-		const { sut, encrypterStub } = makeSut();
-		const encryptSpy = jest.spyOn(encrypterStub, 'encrypt');
+	test('Should call Hasher with corret password', async () => {
+		const { sut, hashStub } = makeSut();
+		const encryptSpy = jest.spyOn(hashStub, 'encrypt');
 
 		await sut.add(makeFakeAccountData());
 		expect(encryptSpy).toHaveBeenCalledWith('valid_password');
 	});
 
-	test('Should throw if Encrypter throws', async () => {
-		const { sut, encrypterStub } = makeSut();
-		jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(
+	test('Should throw if Hasher throws', async () => {
+		const { sut, hashStub } = makeSut();
+		jest.spyOn(hashStub, 'encrypt').mockReturnValueOnce(
 			new Promise((resolve, reject) => reject(new Error()))
 		);
 
@@ -73,7 +73,7 @@ describe('DbAddAccount UseCase', () => {
 	});
 
 	test('Should call AddAccountRepository with correct values', async () => {
-		const { sut, addAccountRepositoryStub, encrypterStub } = makeSut();
+		const { sut, addAccountRepositoryStub, hashStub } = makeSut();
 		const addSpy = jest.spyOn(addAccountRepositoryStub, 'add');
 		await sut.add(makeFakeAccountData());
 		expect(addSpy).toHaveBeenCalledWith({
