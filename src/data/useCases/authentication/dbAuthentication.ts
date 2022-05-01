@@ -30,7 +30,7 @@ export class DbAuthentication implements Authentication {
 				account.password
 			);
 			if (isValid) {
-				const accessToken = await this.tokenGenerator.encrypter(
+				const accessToken = await this.tokenGenerator.encrypt(
 					account.id
 				);
 				await this.updateAccessTokenRepository.update(
