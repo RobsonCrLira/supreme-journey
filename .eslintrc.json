@@ -26,6 +26,8 @@
 		"import"
 	],
 	"rules": {
+		"no-useless-constructor": "off",
+		"no-empty-function": ["error", { "allow": ["constructors"] }], 
 		"no-restricted-syntax": "off",
 		"no-new": "off",
 		"no-underscore-dangle": "off",

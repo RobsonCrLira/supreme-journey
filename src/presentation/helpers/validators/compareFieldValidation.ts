@@ -5,10 +5,7 @@ export class CompareFieldsValidations implements Validation {
 	constructor(
 		private readonly fieldName: string,
 		private readonly fieldToCompareName: string
-	) {
-		this.fieldName = fieldName;
-		this.fieldToCompareName = fieldToCompareName;
-	}
+	) {}
 
 	// eslint-disable-next-line consistent-return
 	validate(input: any): Error | null {
