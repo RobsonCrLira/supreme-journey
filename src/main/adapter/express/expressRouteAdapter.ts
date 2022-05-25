@@ -3,7 +3,7 @@ import {
 	Controller,
 	HttpResponse,
 	HttpRequest,
-} from '../../presentation/protocols';
+} from '../../../presentation/protocols';
 
 export const adaptRoute = (controller: Controller) => {
 	return async (req: Request, res: Response) => {
