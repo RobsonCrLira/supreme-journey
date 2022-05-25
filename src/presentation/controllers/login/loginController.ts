@@ -10,7 +10,7 @@ import {
 	HttpResponse,
 	Authentication,
 	Validation,
-} from './loginProtocols';
+} from './loginControllerProtocols';
 
 export class LoginController implements Controller {
 	constructor(
