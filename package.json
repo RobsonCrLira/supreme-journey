@@ -9,7 +9,9 @@
 	"scripts": {
 		"build": "rimraf dist && tsc",
 		"start": "node dist/main/server.js",
-		"dev": "sucrase-node src/main/server.ts",
+		"start:docker:up": "yarn build &&  docker-compose up -d",
+		"start:docker:down": "docker-compose down",
+		"dev":"sucrase-node src/main/server.ts", 
 		"test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
 		"test:verbose": "jest --passWithNoTests --runInBand",
 		"test:unit": "yarn test --watch -c jest-unit-config.js",
