@@ -9,7 +9,8 @@
 	"scripts": {
 		"build": "rimraf dist && tsc",
 		"start": "node dist/main/server.js",
-		"dev:docker:up": "yarn build &&  docker-compose up -d",
+		"debug": "node --inspect=0.0.0.0:9222 dist/main/server.js",
+		"dev:docker:up": "yarn build && docker-compose up -d",
 		"dev:docker:down": "docker-compose down",
 		"dev":"sucrase-node src/main/server.ts", 
 		"test": "jest --passWithNoTests --silent --noStackTrace --runInBand",

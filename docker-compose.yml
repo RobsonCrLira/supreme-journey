@@ -15,9 +15,11 @@ services:
     command: yarn start
     volumes:
       - ./dist:/usr/app/dist/
+      - ./package.json:/usr/app/package.json
     image: clean-code
     ports:
       - "3000:3000"
+      - "9222:9222"
     links:
       - "mongo"
     depends_on:
