@@ -10,13 +10,13 @@ services:
       - "27017:27017"
   api:
     container_name: api-container
-    build: .
+    image: node:16.15-alpine
+    working_dir: /usr/app/
     restart: always
-    command: yarn start
+    command: [yarn, docker:run]
     volumes:
-      - ./dist:/usr/app/dist/
+      - ./dist/:/usr/app/dist/
       - ./package.json:/usr/app/package.json
-    image: clean-code
     ports:
       - "3000:3000"
       - "9222:9222"

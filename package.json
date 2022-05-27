@@ -5,14 +5,22 @@
 	"description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
 	"author": "Robson Cristian de Lira <robson.crlira@hotmail.com>",
 	"license": "MIT",
-	"keywords": ["clean-code", "clean-architecture", "node", "typescript", "TDD", "DDD"],
+	"keywords": [
+		"clean-code",
+		"clean-architecture",
+		"node",
+		"typescript",
+		"TDD",
+		"DDD"
+	],
 	"scripts": {
 		"build": "rimraf dist && tsc",
 		"start": "node dist/main/server.js",
-		"debug": "node --inspect=0.0.0.0:9222 dist/main/server.js",
-		"dev:docker:up": "yarn build && docker-compose up -d",
+		"docker:run": "yarn --only=prod &&  yarn debug",
+		"debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy dist/main/server.js",
+		"dev:docker:up": "yarn build && docker-compose up",
 		"dev:docker:down": "docker-compose down",
-		"dev":"sucrase-node src/main/server.ts", 
+		"dev": "sucrase-node src/main/server.ts",
 		"test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
 		"test:verbose": "jest --passWithNoTests --runInBand",
 		"test:unit": "yarn test --watch -c jest-unit-config.js",
@@ -61,6 +69,7 @@
 		"fast-glob": "^3.2.7",
 		"jsonwebtoken": "^8.5.1",
 		"mongodb": "^4.2.2",
+		"nodemon": "^2.0.16",
 		"validator": "^13.7.0"
 	},
 	"engines": {
