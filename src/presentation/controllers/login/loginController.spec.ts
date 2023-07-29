@@ -5,13 +5,13 @@ import {
 	serverError,
 	unauthorized,
 } from '../../helpers/http/httpHelpers';
-import {
-	HttpRequest,
-	Authentication,
-	Validation,
-	AuthenticationModel,
-} from './loginControllerProtocols';
 import { LoginController } from './loginController';
+import {
+	Authentication,
+	AuthenticationModel,
+	HttpRequest,
+	Validation,
+} from './loginControllerProtocols';
 
 interface SutTypes {
 	sut: LoginController;
@@ -27,6 +27,7 @@ const makeAuthentication = (): Authentication => {
 	}
 	return new AuthenticationStub();
 };
+
 const makeValidation = (): Validation => {
 	class ValidationStub implements Validation {
 		validate(input: any): Error | null {
@@ -38,7 +39,7 @@ const makeValidation = (): Validation => {
 
 const makeFakeRequest = (): HttpRequest => ({
 	body: {
-		email: 'any_email@email.com',
+		email: 'any_email@mail.com',
 		password: 'any_password',
 	},
 });
@@ -60,7 +61,7 @@ describe('Login Controller', () => {
 		const authSpy = jest.spyOn(authenticationStub, 'auth');
 		await sut.handle(makeFakeRequest());
 		expect(authSpy).toHaveBeenCalledWith({
-			email: 'any_email@email.com',
+			email: 'any_email@mail.com',
 			password: 'any_password',
 		});
 	});
