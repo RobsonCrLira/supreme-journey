@@ -30,11 +30,11 @@ class SignUpController implements Controller {
 				email,
 				password,
 			});
-			await this.authentication.auth({
+			const access_token = await this.authentication.auth({
 				email,
 				password,
 			});
-			return ok(account);
+			return ok({ access_token });
 		} catch (error) {
 			return serverError(error);
 		}
